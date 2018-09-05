@@ -11,6 +11,6 @@ describe('#versionGuard', function() {
   it('throw an error if version is already defined', function() {
     (function() {
       bitcore.versionGuard('version');
-    }).should.throw('More than one instance of bitcore');
+    }).should.throw('More than one instance of zcore-lib');
   });
 });
