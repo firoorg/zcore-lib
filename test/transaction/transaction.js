@@ -19,6 +19,7 @@ var Address = bitcore.Address;
 var Networks = bitcore.Networks;
 var Opcode = bitcore.Opcode;
 var errors = bitcore.errors;
+var AddrUtils = bitcore.util.AddrUtils;
 
 var transactionVector = require('../data/tx_creation');
 
@@ -52,7 +53,7 @@ describe('Transaction', function() {
       'script': testScript,
       'satoshis': testAmount
     })
-    .to('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc', testAmount - 10000);
+    .to(AddrUtils.bitcoin_address_to_zcoin('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc'), testAmount - 10000);
 
   it('can serialize to a plain javascript object', function() {
     var object = testTransaction.toObject();
@@ -199,7 +200,7 @@ describe('Transaction', function() {
 
   // TODO: Migrate this into a test for inputs
 
-  var fromAddress = 'mszYqVnqKoQx4jcTdJXxwKAissE3Jbrrc1';
+  var fromAddress = AddrUtils.bitcoin_address_to_zcoin('mszYqVnqKoQx4jcTdJXxwKAissE3Jbrrc1');
   var simpleUtxoWith100000Satoshis = {
     address: fromAddress,
     txId: 'a477af6b2667c29670467e4e0728b685ee07b240235771862318e29ddbe58458',
@@ -217,10 +218,10 @@ describe('Transaction', function() {
   };
   var anyoneCanSpendUTXO = JSON.parse(JSON.stringify(simpleUtxoWith100000Satoshis));
   anyoneCanSpendUTXO.script = new Script().add('OP_TRUE');
-  var toAddress = 'mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc';
-  var changeAddress = 'mgBCJAsvzgT2qNNeXsoECg2uPKrUsZ76up';
-  var changeAddressP2SH = '2N7T3TAetJrSCruQ39aNrJvYLhG1LJosujf';
-  var privateKey = 'cSBnVM4xvxarwGQuAfQFwqDg9k5tErHUHzgWsEfD4zdwUasvqRVY';
+  var toAddress = AddrUtils.bitcoin_address_to_zcoin('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc');
+  var changeAddress = AddrUtils.bitcoin_address_to_zcoin('mgBCJAsvzgT2qNNeXsoECg2uPKrUsZ76up');
+  var changeAddressP2SH = AddrUtils.bitcoin_address_to_zcoin('2N7T3TAetJrSCruQ39aNrJvYLhG1LJosujf');
+  var privateKey = AddrUtils.bitcoin_address_to_zcoin('cSBnVM4xvxarwGQuAfQFwqDg9k5tErHUHzgWsEfD4zdwUasvqRVY');
   var private1 = '6ce7e97e317d2af16c33db0b9270ec047a91bff3eff8558afb5014afb2bb5976';
   var private2 = 'c9b26b0f771a0d2dad88a44de90f05f416b3b385ff1d989343005546a0032890';
   var public1 = new PrivateKey(private1).publicKey;
@@ -233,16 +234,16 @@ describe('Transaction', function() {
     script: Script.buildPublicKeyHashOut(fromAddress).toString(),
     satoshis: 1e8
   };
-
+  //
   var tenth = 1e7;
   var fourth = 25e6;
   var half = 5e7;
 
-  var p2shPrivateKey1 = PrivateKey.fromWIF('cNuW8LX2oeQXfKKCGxajGvqwhCgBtacwTQqiCGHzzKfmpHGY4TE9');
+  var p2shPrivateKey1 = PrivateKey.fromWIF(AddrUtils.bitcoin_address_to_zcoin('cNuW8LX2oeQXfKKCGxajGvqwhCgBtacwTQqiCGHzzKfmpHGY4TE9'));
   var p2shPublicKey1 = p2shPrivateKey1.toPublicKey();
-  var p2shPrivateKey2 = PrivateKey.fromWIF('cTtLHt4mv6zuJytSnM7Vd6NLxyNauYLMxD818sBC8PJ1UPiVTRSs');
+  var p2shPrivateKey2 = PrivateKey.fromWIF(AddrUtils.bitcoin_address_to_zcoin('cTtLHt4mv6zuJytSnM7Vd6NLxyNauYLMxD818sBC8PJ1UPiVTRSs'));
   var p2shPublicKey2 = p2shPrivateKey2.toPublicKey();
-  var p2shPrivateKey3 = PrivateKey.fromWIF('cQFMZ5gP9CJtUZPc9X3yFae89qaiQLspnftyxxLGvVNvM6tS6mYY');
+  var p2shPrivateKey3 = PrivateKey.fromWIF(AddrUtils.bitcoin_address_to_zcoin('cQFMZ5gP9CJtUZPc9X3yFae89qaiQLspnftyxxLGvVNvM6tS6mYY'));
   var p2shPublicKey3 = p2shPrivateKey3.toPublicKey();
 
   var p2shAddress = Address.createMultisig([
@@ -610,7 +611,7 @@ describe('Transaction', function() {
           'script': testScript,
           'satoshis': testAmount
         })
-        .to('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc', testAmount - 10000);
+        .to(AddrUtils.bitcoin_address_to_zcoin('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc'), testAmount - 10000);
 
       tx.outputs[0]._satoshis = 100;
       tx.outputs[0]._satoshisBN = new BN('fffffffffffffff', 16);
@@ -626,7 +627,7 @@ describe('Transaction', function() {
           'script': testScript,
           'satoshis': testAmount
         })
-        .to('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc', testAmount - 10000);
+        .to(AddrUtils.bitcoin_address_to_zcoin('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc'), testAmount - 10000);
 
       tx.outputs[0]._satoshis = -100;
       tx.outputs[0]._satoshisBN = new BN(-100, 10);
@@ -643,7 +644,7 @@ describe('Transaction', function() {
           'script': testScript,
           'satoshis': testAmount
         })
-        .to('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc', testAmount - 10000);
+        .to(AddrUtils.bitcoin_address_to_zcoin('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc'), testAmount - 10000);
 
       tx.toBuffer = sinon.stub().returns({
         length: 10000000
@@ -663,7 +664,7 @@ describe('Transaction', function() {
           'script': testScript,
           'satoshis': testAmount
         })
-        .to('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc', testAmount - 10000);
+        .to(AddrUtils.bitcoin_address_to_zcoin('mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc'), testAmount - 10000);
 
       tx.isCoinbase = sinon.stub().returns(false);
       tx.inputs[0].isNull = sinon.stub().returns(true);
@@ -1630,11 +1631,11 @@ describe('Transaction', function() {
       });
     });
     describe('signing', function() {
-      var privateKey1 = PrivateKey.fromWIF('cNuW8LX2oeQXfKKCGxajGvqwhCgBtacwTQqiCGHzzKfmpHGY4TE9');
+      var privateKey1 = PrivateKey.fromWIF(AddrUtils.bitcoin_address_to_zcoin('cNuW8LX2oeQXfKKCGxajGvqwhCgBtacwTQqiCGHzzKfmpHGY4TE9'));
       var publicKey1 = p2shPrivateKey1.toPublicKey();
-      var privateKey2 = PrivateKey.fromWIF('cTtLHt4mv6zuJytSnM7Vd6NLxyNauYLMxD818sBC8PJ1UPiVTRSs');
+      var privateKey2 = PrivateKey.fromWIF(AddrUtils.bitcoin_address_to_zcoin('cTtLHt4mv6zuJytSnM7Vd6NLxyNauYLMxD818sBC8PJ1UPiVTRSs'));
       var publicKey2 = p2shPrivateKey2.toPublicKey();
-      var privateKey3 = PrivateKey.fromWIF('cQFMZ5gP9CJtUZPc9X3yFae89qaiQLspnftyxxLGvVNvM6tS6mYY');
+      var privateKey3 = PrivateKey.fromWIF(AddrUtils.bitcoin_address_to_zcoin('cQFMZ5gP9CJtUZPc9X3yFae89qaiQLspnftyxxLGvVNvM6tS6mYY'));
       var publicKey3 = p2shPrivateKey3.toPublicKey();
       var address = Address.createMultisig([
         publicKey1
@@ -1649,19 +1650,17 @@ describe('Transaction', function() {
       it('will sign with nested p2sh witness program', function() {
         var tx = new Transaction()
           .from(utxo, [publicKey1], 1, true)
-          .to([{address: 'n3LsXgyStG2CkS2CnWZtDqxTfCnXB8PvD9', satoshis: 50000}])
+          .to([{address: AddrUtils.bitcoin_address_to_zcoin('n3LsXgyStG2CkS2CnWZtDqxTfCnXB8PvD9'), satoshis: 50000}])
           .fee(150000)
-          .change('mqWDcnW3jMzthB8qdB9SnFam6N96GDqM4W')
+          .change(AddrUtils.bitcoin_address_to_zcoin('mqWDcnW3jMzthB8qdB9SnFam6N96GDqM4W'))
           .sign(privateKey1);
         var sighash = tx.inputs[0].getSighash(tx, privateKey1, 0, bitcore.crypto.Signature.SIGHASH_ALL);
         sighash.toString('hex').should.equal('51b7c5271ae04071a6d3d4c4cde28003d8e9a09e51931ebae4003539767a4955');
         tx.toBuffer().toString('hex').should.equal('0100000000010161dc9737a880fd1f8671fa314d6e66b00060a52e97118d8a1b829fd95029731d010000002322002028ba8620c84df12e3283de37d02cfa7bcae3894e118388d6b3ae50f9aeb38798ffffffff0250c30000000000001976a914ef6aa14d8f5ba65a12c327a9659681c44cd821b088acc0d3f205000000001976a9146d8da2015c6d2890896485edd5897b3b2ec9ebb188ac030047304402203fdbd6604939ed9b46bd07bea993b102336a6fbc0a0c987f05b8522a2079037f022064466db4b0c6cc6697a28e0ba9b28c9738ecba56033a60aab7f04d5da2a8241e0125512102feab7deafbdb39885ef92a285dfa0f4ada0feefce43685e6551c95e71496d98051ae00000000');
       });
     });
-  });
-
+ });
 });
-
 
 var tx_empty_hex = '01000000000000000000';
 

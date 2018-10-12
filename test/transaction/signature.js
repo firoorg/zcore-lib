@@ -12,11 +12,12 @@ var TransactionSignature = bitcore.Transaction.Signature;
 var Script = bitcore.Script;
 var PrivateKey = bitcore.PrivateKey;
 var errors = bitcore.errors;
+var AddrUtils = bitcore.util.AddrUtils;
 
 describe('TransactionSignature', function() {
 
-  var fromAddress = 'mszYqVnqKoQx4jcTdJXxwKAissE3Jbrrc1';
-  var privateKey = 'cSBnVM4xvxarwGQuAfQFwqDg9k5tErHUHzgWsEfD4zdwUasvqRVY';
+  var fromAddress = AddrUtils.bitcoin_address_to_zcoin('mszYqVnqKoQx4jcTdJXxwKAissE3Jbrrc1');
+  var privateKey = AddrUtils.bitcoin_address_to_zcoin('cSBnVM4xvxarwGQuAfQFwqDg9k5tErHUHzgWsEfD4zdwUasvqRVY');
   var simpleUtxoWith100000Satoshis = {
     address: fromAddress,
     txId: 'a477af6b2667c29670467e4e0728b685ee07b240235771862318e29ddbe58458',

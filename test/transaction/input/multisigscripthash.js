@@ -12,19 +12,20 @@ var Address = bitcore.Address;
 var Script = bitcore.Script;
 var Signature = bitcore.crypto.Signature;
 var MultiSigScriptHashInput = bitcore.Transaction.Input.MultiSigScriptHash;
+var AddrUtils = bitcore.util.AddrUtils;
 
 describe('MultiSigScriptHashInput', function() {
 
-  var privateKey1 = new PrivateKey('KwF9LjRraetZuEjR8VqEq539z137LW5anYDUnVK11vM3mNMHTWb4');
-  var privateKey2 = new PrivateKey('L4PqnaPTCkYhAqH3YQmefjxQP6zRcF4EJbdGqR8v6adtG9XSsadY');
-  var privateKey3 = new PrivateKey('L4CTX79zFeksZTyyoFuPQAySfmP7fL3R41gWKTuepuN7hxuNuJwV');
+  var privateKey1 = new PrivateKey(AddrUtils.bitcoin_address_to_zcoin('KwF9LjRraetZuEjR8VqEq539z137LW5anYDUnVK11vM3mNMHTWb4'));
+  var privateKey2 = new PrivateKey(AddrUtils.bitcoin_address_to_zcoin('L4PqnaPTCkYhAqH3YQmefjxQP6zRcF4EJbdGqR8v6adtG9XSsadY'));
+  var privateKey3 = new PrivateKey(AddrUtils.bitcoin_address_to_zcoin('L4CTX79zFeksZTyyoFuPQAySfmP7fL3R41gWKTuepuN7hxuNuJwV'));
   var public1 = privateKey1.publicKey;
   var public2 = privateKey2.publicKey;
   var public3 = privateKey3.publicKey;
-  var address = new Address('33zbk2aSZYdNbRsMPPt6jgy6Kq1kQreqeb');
+  var address = new Address(AddrUtils.bitcoin_address_to_zcoin('33zbk2aSZYdNbRsMPPt6jgy6Kq1kQreqeb'));
 
   var output = {
-    address: '33zbk2aSZYdNbRsMPPt6jgy6Kq1kQreqeb',
+    address: AddrUtils.bitcoin_address_to_zcoin('33zbk2aSZYdNbRsMPPt6jgy6Kq1kQreqeb'),
     txId: '66e64ef8a3b384164b78453fa8c8194de9a473ba14f89485a0e433699daec140',
     outputIndex: 0,
     script: new Script(address),
