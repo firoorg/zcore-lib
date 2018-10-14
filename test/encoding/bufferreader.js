@@ -357,4 +357,24 @@ describe('BufferReader', function() {
 
   });
 
+    describe('#skip', function() {
+
+        it('should skip the number of bytes', function() {
+            var len = 10;
+            var buf = Buffer.alloc(len);
+
+            for (var i = 0; i < len; ++i)
+              buf[i] = i;
+
+            var br = new BufferReader(buf);
+            br.readUInt8().should.equal(0);
+            br.readUInt8().should.equal(1);
+            br.skip(6);
+            br.readUInt8().should.equal(8);
+            br.skip();
+            br.readUInt8().should.equal(9);
+        });
+
+    });
+
 });
