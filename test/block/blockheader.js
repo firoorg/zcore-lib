@@ -8,6 +8,7 @@ var BufferWriter = bitcore.encoding.BufferWriter;
 var BlockHeader = bitcore.BlockHeader;
 var fs = require('fs');
 var should = require('chai').should();
+var networks = bitcore.Networks;
 
 // https://test-insight.bitpay.com/block/000000000b99b16390660d79fcc138d2ad0c89a0d044c4201a02bdf1f61ffa11
 var dataRawBlockBuffer = fs.readFileSync('test/data/blk86756-testnet.dat');
@@ -294,9 +295,35 @@ describe('BlockHeader', function() {
     });
   });
 
-  it('coverage: caches the "_id" property', function() {
-      var blockHeader = BlockHeader.fromRawBlock(dataRawBlockBuffer);
-      blockHeader.id.should.equal(blockHeader.id);
+  it('#isMtp', function() {
+      global.mtp = {
+          isMtpEnabled: true,
+          network: networks.mainnet
+      };
+
+      var blockHeader = new BlockHeader.fromRawBlock(dataRawBlockBuffer);
+      blockHeader.time = 1543622400 -1;
+      blockHeader.isMtp().should.equal(false);
+      blockHeader.time = 1543622400;
+      blockHeader.isMtp().should.equal(true);
+
+      global.mtp = {
+          isMtpEnabled: true,
+          network: networks.testnet
+      };
+      blockHeader.time = 1539172800 -1;
+      blockHeader.isMtp().should.equal(false);
+      blockHeader.time = 1539172800;
+      blockHeader.isMtp().should.equal(true);
+
+      global.mtp = {
+          isMtpEnabled: false,
+          network: networks.testnet
+      };
+      blockHeader.time = 1539172800 -1;
+      blockHeader.isMtp().should.equal(false);
+      blockHeader.time = 1539172800;
+      blockHeader.isMtp().should.equal(false);
   });
 
 });
