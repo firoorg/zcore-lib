@@ -4715,6 +4715,18 @@ addNetwork({
  */
 var testnet = get('testnet');
 
+addNetwork({
+    name: 'devnet',
+    alias: 'devnet',
+    port: 38168
+});
+
+/**
+ * @instance
+ * @member Networks#devnet
+ */
+var devnet = get('devnet');
+
 // Add configurable values for testnet/regtest
 
 var TESTNET = {
@@ -4810,6 +4822,7 @@ module.exports = {
   livenet: livenet,
   mainnet: livenet,
   testnet: testnet,
+  devnet: devnet,
   get: get,
   enableRegtest: enableRegtest,
   disableRegtest: disableRegtest
