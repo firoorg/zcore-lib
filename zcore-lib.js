@@ -4718,7 +4718,15 @@ var testnet = get('testnet');
 addNetwork({
     name: 'devnet',
     alias: 'devnet',
-    port: 38168
+    pubkeyhash: 0x41, // 65
+    privatekey: 0xb9, // 185
+    scripthash: 0xb2, // 178
+    xpubkey: 0x043587cf,
+    xprivkey: 0x04358394,
+    networkMagic: 0x00100020,
+    port: 38168,
+    dnsSeeds: [],
+    knownHalvings: [120]
 });
 
 /**
