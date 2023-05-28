@@ -4726,7 +4726,7 @@ addNetwork({
     networkMagic: 0x00100020,
     port: 38168,
     dnsSeeds: [],
-    knownHalvings: [120]
+    knownHalvings: [1]
 });
 
 /**
