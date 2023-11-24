@@ -4715,6 +4715,26 @@ addNetwork({
  */
 var testnet = get('testnet');
 
+addNetwork({
+    name: 'devnet',
+    alias: 'devnet',
+    pubkeyhash: 0x41, // 65
+    privatekey: 0xb9, // 185
+    scripthash: 0xb2, // 178
+    xpubkey: 0x043587cf,
+    xprivkey: 0x04358394,
+    networkMagic: 0x00100020,
+    port: 38168,
+    dnsSeeds: [],
+    knownHalvings: [1]
+});
+
+/**
+ * @instance
+ * @member Networks#devnet
+ */
+var devnet = get('devnet');
+
 // Add configurable values for testnet/regtest
 
 var TESTNET = {
@@ -4810,6 +4830,7 @@ module.exports = {
   livenet: livenet,
   mainnet: livenet,
   testnet: testnet,
+  devnet: devnet,
   get: get,
   enableRegtest: enableRegtest,
   disableRegtest: disableRegtest
